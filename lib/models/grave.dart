@@ -44,10 +44,10 @@ class Grave{
       section: json['section'],
       burialOrderNumber: json['burialOrderNumber'],
       burialCompany: json['burialCompany'],
-      dateOfBurial: json['dateOfBurial'],
+      dateOfBurial: DateTime.parse(json['dateOfBurial']),
       feesPaid: json['feesPaid'],
       receiptNumber: json['receiptNumber'],
-      datePaid: json['datePaid'],
+      datePaid: DateTime.parse(json['datePaid']),
       capturedBy: json['capturedBy'],
       deceased: json['deceased'] != null? Person.fromJson(json['deceased']) : null,
       nextOfKin: json['nextOfKin'] !=null? NextOfKin.fromJson(json['nextOfKin']):null

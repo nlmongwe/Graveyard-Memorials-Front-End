@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../Widgets/custom_heading.dart';
-import '../content/find_a_grave_heading.dart';
 import 'find_a_grave_desktop_view.dart';
 import 'find_a_grave_mobile_view.dart';
 import 'find_a_grave_tablet_view.dart';

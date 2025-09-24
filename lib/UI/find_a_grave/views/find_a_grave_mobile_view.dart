@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:web_project/UI/Widgets/call_to_action_button.dart';
 import 'package:web_project/UI/Widgets/custom_form.dart';
 import 'package:web_project/Utils/extensions.dart';
+import 'package:web_project/models/find_a_grave_search_input.dart';
+import '../../../models/grave.dart';
+import '../../../services/api_requests_handler.dart';
 import '../../Widgets/custom_date_form.dart';
+import 'find_a_grave_search_results.datr==rt.dart';
 
 class FindAGraveMobileView extends StatefulWidget {
   const FindAGraveMobileView({super.key});
@@ -13,6 +17,7 @@ class FindAGraveMobileView extends StatefulWidget {
 
 class _FindAGraveMobileViewState extends State<FindAGraveMobileView> {
   final _findAGraveFormKey = GlobalKey<FormState>();
+  final _findAGraveApi = ApiRequestsHandler();
   final TextEditingController _dateOdBirthController = TextEditingController();
   final TextEditingController _dateOdDeathController = TextEditingController();
 
@@ -138,7 +143,7 @@ class _FindAGraveMobileViewState extends State<FindAGraveMobileView> {
     return null;
   }
 
-  void _submitForm() {
+  void _submitForm() async{
     if (_findAGraveFormKey.currentState!.validate()) {
       _findAGraveFormKey.currentState!.save();
 
@@ -151,6 +156,17 @@ class _FindAGraveMobileViewState extends State<FindAGraveMobileView> {
         // none filled
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Please fill at least on field")));
+      } else {
+        final FindAGraveSearchInput input = FindAGraveSearchInput(
+            graveNumber: _graveNumber,
+            burialOrderNumber: _burialOrderNumber,
+            fullName: _fullNames,
+            surName: _surName,
+            dateOfBirth: _dateOfBirth,
+            dateOfDeath: _dateOfDeath);
+        List<Grave> graves = await _findAGraveApi.findAGraveSearch(input);
+
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => FindAGraveSearchResults(graveResults:graves)));
       }
     }
   }
